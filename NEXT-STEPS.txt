@@ -1,0 +1,7 @@
+BlueFlix next steps
+
+1. Open this extracted folder in VS Code and run index.html with Live Server.
+2. The current catalogue still uses the sample entries in script.js.
+3. Supabase is not connected just by creating a project. Review supabase-schema.sql first.
+4. Do not share database passwords or secret/service_role keys in chat.
+5. Send a screenshot if you want help doing the Supabase setup step by step.

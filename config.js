@@ -1,0 +1,5 @@
+window.BLUEFLIX_CONFIG = {
+  tmdbReadToken: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MGMyZjM4ZDhlNDZmZDE3NDVlZDQ5NTliYTNiZTY5OSIsIm5iZiI6MTc5MzAxNTYzMC4wMzEwMDAxLCJzdWIiOiI2YWRmM2Y0ZWEwYWQwMmI5ZGNlMWVhMWIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.iv3-5fya74rqje9yDjFybQ_5gZ1RQOOPdV3vYgNIxHI",
+  supabaseUrl: "https://zpyarlytclxwmctedpzs.supabase.co",
+  supabasePublishableKey: "sb_publishable_3UI2_KZkyuNC2XDy2Wjvpg_7690IA9U"
+};
