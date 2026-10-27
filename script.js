@@ -136,42 +136,34 @@ function renderMovies() {
 }
 
 async function loadMovies() {
-  if (!config?.tmdbReadToken) {
-    console.error("TMDB token missing. Check config.js.");
-    return;
-  }
+  const supabaseFunctionUrl =
+    "https://zpyarlytclxwmctedpzs.supabase.co/functions/v1/quick-worker";
+
+  const paths = [
+    "trending/movie/week",
+    "movie/popular",
+    "movie/now_playing"
+  ];
 
   try {
-    const headers = {
-      Authorization: `Bearer ${config.tmdbReadToken}`,
-      accept: "application/json"
-    };
-
-    const requests = [
-      fetch(
-        "https://api.themoviedb.org/3/trending/movie/week?language=en-US",
-        { headers }
-      ),
-      fetch(
-        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
-        { headers }
-      ),
-      fetch(
-        "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&region=IN",
-        { headers }
-      )
-    ];
-
-    const responses = await Promise.all(requests);
-
-    for (const response of responses) {
-      if (!response.ok) {
-        throw new Error(`TMDB API error: ${response.status}`);
-      }
-    }
-
     const results = await Promise.all(
-      responses.map(response => response.json())
+      paths.map(async path => {
+        const url = new URL(supabaseFunctionUrl);
+        url.searchParams.set("path", path);
+        url.searchParams.set("language", "en-US");
+
+        if (path === "movie/now_playing") {
+          url.searchParams.set("region", "IN");
+        }
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error(`Movie API error: ${response.status}`);
+        }
+
+        return response.json();
+      })
     );
 
     const uniqueMovies = new Map();
@@ -200,6 +192,7 @@ async function loadMovies() {
     renderMovies();
 
     console.log("BlueFlix movies loaded:", movies.length);
+    console.log("TMDB movies:", tmdbMovies.length, "| Classics:", classics.length);
   } catch (error) {
     console.error("Could not load TMDB movies:", error);
 
